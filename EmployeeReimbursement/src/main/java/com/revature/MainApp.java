@@ -35,6 +35,7 @@ public class MainApp {
 		app.get("/users/{id}", UserController.getUserById);
 
 		app.get("/tickets", TicketController.getAllTickets);
+		app.get("/tickets/{authorId}", TicketController.getTicketsByAuthorId);
 		
 		//POST methods
 		app.post("/users/register", UserController.register);

@@ -13,7 +13,7 @@ public interface TicketDAO {
 	public boolean updateTicket(Ticket ticket);
 	
 	//employee
-	public List<Ticket> getTicketsByUsername(String username);
+	public List<Ticket> getTicketsByAuthorId(int authorId);
 	
 	public Ticket getTicketById(int id);
 }

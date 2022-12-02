@@ -84,8 +84,33 @@ public class TicketDAOImpl implements TicketDAO {
 	}
 
 	@Override
-	public List<Ticket> getTicketsByUsername(String username) {
-		// TODO Auto-generated method stub
+	public List<Ticket> getTicketsByAuthorId(int authorId) {
+		try {
+			logger.info("TicketDAOImpl - getTicketsByUsername()... generating list of tickets by username...");
+			
+			List<Ticket> ticketList = new ArrayList<>();
+			
+			String sql = "SELECT * FROM ers_tickets WHERE author_id=? ORDER BY status_id ";
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, authorId);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Ticket ticket = new Ticket(rs.getInt("ticket_id"),
+											rs.getDouble("amount"),
+											rs.getString("description"),
+											rs.getInt("status_id"),
+											rs.getInt("author_id"));
+				ticketList.add(ticket);
+			}
+			
+			return ticketList;
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
 		return null;
 	}
 

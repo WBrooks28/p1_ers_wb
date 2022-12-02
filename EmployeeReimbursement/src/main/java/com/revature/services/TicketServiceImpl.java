@@ -29,12 +29,12 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public boolean updateTicketStatus(Ticket ticket) {
-		if (ticket.getStatusId() != 3) {
-			logger.info("Cannot update a ticket that has already been processed");
-			return true;
-		} else {
+//		if (ticket.getStatusId() == 3) {
+//			logger.info("Cannot update a ticket that has already been processed");
+//			return true;
+//		} else {
 			return ticketDAO.updateTicket(ticket);
-		}
+//		}
 	}
 
 	@Override
@@ -43,9 +43,8 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public List<Ticket> getTicketByUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Ticket> getTicketsByAuthorId(int authorId) {
+		return ticketDAO.getTicketsByAuthorId(authorId);
 	}
 
 	@Override

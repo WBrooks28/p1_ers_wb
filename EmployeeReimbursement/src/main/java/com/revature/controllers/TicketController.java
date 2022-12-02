@@ -62,10 +62,10 @@ public class TicketController {
 			ctx.status(HttpStatus.UNAUTHORIZED);
 		} else {
 			String body = ctx.body();
-		ObjectMapper om = new ObjectMapper();
-		Ticket target = om.readValue(body, Ticket.class);
-		
-		boolean isUpdated = tServ.updateTicketStatus(target);
+			ObjectMapper om = new ObjectMapper();
+			Ticket target = om.readValue(body, Ticket.class);
+			
+			boolean isUpdated = tServ.updateTicketStatus(target);
 		
 		if(isUpdated != false) {
 			ctx.html("Error during update. Try again");
@@ -73,7 +73,10 @@ public class TicketController {
 		}else {
 			ctx.html("The ticket has been updated");
 			ctx.status(HttpStatus.OK);
+			
 		}
+		
+		
 		}
 		
 		
@@ -103,7 +106,30 @@ public class TicketController {
 			ctx.status(HttpStatus.NOT_FOUND);
 		}
 		}
+	};
+	
+	public static Handler getTicketsByAuthorId = ctx -> {
+		int id = Integer.parseInt(ctx.pathParam("authorId"));
 		
+		System.out.println(id);
+		String un = ctx.cookie("User-Cookie");
+		int authId = uServ.getId(un);
+		String authRole = uServ.getRole(un);
+		
+		if (authId == id || authRole.equals("manager")) {
+			List<Ticket> tickets = tServ.getTicketsByAuthorId(id);
+			
+			if(!tickets.isEmpty()) {
+				ctx.json(tickets);
+				ctx.status(HttpStatus.OK);
+			} else {
+				ctx.html("No tickets found.");
+				ctx.status(HttpStatus.NOT_FOUND);
+			}
+		} else {
+			ctx.html("You are not authorized to view these tickets");
+			ctx.status(HttpStatus.UNAUTHORIZED);
+		}
 		
 		
 	};

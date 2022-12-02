@@ -11,7 +11,7 @@ public interface TicketService {
 	boolean updateTicketStatus(Ticket ticket);
 	
 	List<Ticket> getAllTickets();
-	List<Ticket> getTicketByUser(String username);
+	List<Ticket> getTicketsByAuthorId(int authorId);
 	List<Ticket> getTicketByStatus(String username, int statusId);
 	
 }
