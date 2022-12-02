@@ -34,7 +34,7 @@ public class UserDAOImpl implements UserDAO {
 		pstmt.setString(2, user.getPassword());
 		pstmt.setString(3, user.getFirstName());
 		pstmt.setString(4, user.getLastName());
-		pstmt.setString(5, user.getRole());
+		pstmt.setString(5, "employee");
 		
 		pstmt.executeUpdate();
 		
