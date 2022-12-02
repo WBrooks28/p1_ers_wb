@@ -70,12 +70,12 @@ public class UserController {
 		if(isAuthenicated == true) {
 			ctx.html("Successful login. Welcome " + target.getUsername());
 			
-			ctx.cookieStore().set("Auth-Cookie", target.getUsername());
+//			ctx.cookieStore().set("Auth-Cookie", target.getUsername());
 //			Cookie unAuth = new Cookie("Username-Cookie", target.getUsername());
 //			ctx.res().addCookie(unAuth);
-			Cookie auth = new Cookie("Auth-Cookie", target.getUsername());
-			ctx.res().addCookie(auth);
-//			ctx.cookie("User-Cookie", target.getUsername());
+//			Cookie auth = new Cookie("Auth-Cookie", target.getUsername());
+//			ctx.res().addCookie(auth);
+			ctx.cookie("User-Cookie", target.getUsername());
 //			ctx.cookie("Auth-Cookie", uServ.getRole(target.getUsername()));
 			
 			

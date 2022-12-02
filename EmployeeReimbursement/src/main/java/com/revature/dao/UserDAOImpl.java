@@ -112,7 +112,18 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public String getRole(String username) {
-		// TODO Auto-generated method stub
+		try {
+			String sql = "SELECT role FROM ers_users WHERE username=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, username);
+			
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			
+			return rs.getString(1);
+		} catch (SQLException e) {
+			logger.info(e.getMessage());
+		}
 		return null;
 	}
 

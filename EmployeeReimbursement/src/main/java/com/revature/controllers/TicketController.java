@@ -32,7 +32,8 @@ public class TicketController {
 		ObjectMapper om = new ObjectMapper();
 		Ticket target = om.readValue(body, Ticket.class);
 		
-		String un = ctx.cookieStore().get("Auth-Cookie");
+//		String un = ctx.cookieStore().get("Auth-Cookie");
+		String un = ctx.cookie("User-Cookie");
 		int authId = uServ.getId(un);
 		System.out.println(authId);
 		target.setAuthorId(authId);
@@ -55,13 +56,16 @@ public class TicketController {
 		
 		logger.info("TicketController: getAllTicketTickets()... creating ticket...");
 		
-		String body = ctx.body();
-		System.out.println(body);
-		String un = ctx.cookieStore().get("User-Cookie");
+		String un = ctx.cookie("User-Cookie");
+		System.out.println(un);
 		String authRole = uServ.getRole(un);
 		System.out.println(authRole);
 		
-		List<Ticket> tickets = tServ.getAllTickets();
+		if (authRole.equals("employee")) {
+			ctx.html("You must Be a manager to access all tickets");
+			ctx.status(HttpStatus.UNAUTHORIZED);
+		} else {
+			List<Ticket> tickets = tServ.getAllTickets();
 		
 		if(!tickets.isEmpty()) {
 			ctx.json(tickets);
@@ -70,6 +74,9 @@ public class TicketController {
 			ctx.html("No tickets found.");
 			ctx.status(HttpStatus.NOT_FOUND);
 		}
+		}
+		
+		
 		
 	};
 
