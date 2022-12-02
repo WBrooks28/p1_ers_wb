@@ -54,14 +54,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String getRole(String username) {
-		// TODO Auto-generated method stub
+		userDAO.getRole(username);
 		return null;
 	}
 
 	@Override
-	public String getId(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public int getId(String username) {
+		return userDAO.getId(username);
 	}
 
 	@Override

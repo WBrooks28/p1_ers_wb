@@ -117,9 +117,20 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public String getId(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public int getId(String username) {
+		try {
+			String sql = "SELECT user_id FROM ers_users WHERE username=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, username);
+			
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			
+			return rs.getInt(1);
+		} catch (SQLException e) {
+			logger.info(e.getMessage());
+		}
+		return 0;
 	}
 
 }

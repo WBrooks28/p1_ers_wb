@@ -71,12 +71,25 @@ public class UserController {
 			ctx.html("Successful login. Welcome " + target.getUsername());
 			
 			ctx.cookieStore().set("Auth-Cookie", target.getUsername());
+//			Cookie unAuth = new Cookie("Username-Cookie", target.getUsername());
+//			ctx.res().addCookie(unAuth);
 			Cookie auth = new Cookie("Auth-Cookie", target.getUsername());
 			ctx.res().addCookie(auth);
+//			ctx.cookie("User-Cookie", target.getUsername());
+//			ctx.cookie("Auth-Cookie", uServ.getRole(target.getUsername()));
+			
+			
 			ctx.status(HttpStatus.OK);
 		}else {
 			ctx.html("Invalid username and/or password. Please try again.");
 			ctx.status(HttpStatus.UNAUTHORIZED);
 		}
+	};
+	
+	// handler for logout
+	public static Handler logout = ctx -> {
+		ctx.cookieStore().clear();
+		ctx.html("User successfully logged out");
+		ctx.status(HttpStatus.OK);
 	};
 }

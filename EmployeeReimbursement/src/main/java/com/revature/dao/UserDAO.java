@@ -12,6 +12,6 @@ public interface UserDAO {
 	
 	String getRole(String username);
 	
-	String getId(String username);
+	int getId(String username);
 	
 }

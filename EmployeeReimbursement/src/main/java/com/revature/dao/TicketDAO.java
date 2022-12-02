@@ -8,10 +8,10 @@ public interface TicketDAO {
 
 	public int createTicket (Ticket ticket);
 	
-	public List<Ticket> getTickets();
+	public List<Ticket> getAllTickets();
 	
 	//employee
-	public List<Ticket> getTickets(String username);
+	public List<Ticket> getTicketsByUsername(String username);
 	
 	public Ticket getTicketById(int id);
 }

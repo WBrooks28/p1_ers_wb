@@ -14,5 +14,5 @@ public interface UserService {
 	
 	public String getRole(String username);
 
-    public String getId(String username);
+    public int getId(String username);
 }

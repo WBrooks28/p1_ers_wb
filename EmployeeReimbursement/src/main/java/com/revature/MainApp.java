@@ -34,10 +34,12 @@ public class MainApp {
 		
 		app.get("/users/{id}", UserController.getUserById);
 
+		app.get("/tickets", TicketController.getAllTickets);
 		
 		//POST methods
 		app.post("/users/register", UserController.register);
 		app.post("/users/login", UserController.login);
+		app.post("/logout", UserController.logout);
 		
 		app.post("/ticket/submit", TicketController.createTicket);
 		

@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,11 +28,14 @@ public class TicketController {
 		
 		String body = ctx.body();
 		
-		System.out.println(body);
 		
 		ObjectMapper om = new ObjectMapper();
 		Ticket target = om.readValue(body, Ticket.class);
-		target.setAuthorId(Integer.parseInt(ctx.cookieStore().get("userIdCookie")));
+		
+		String un = ctx.cookieStore().get("Auth-Cookie");
+		int authId = uServ.getId(un);
+		System.out.println(authId);
+		target.setAuthorId(authId);
 		
 		logger.info("New ticket" + target);
 		
@@ -42,6 +47,28 @@ public class TicketController {
 		}else {
 			ctx.html("Error during submission. Try again");
 			ctx.status(HttpStatus.NO_CONTENT);
+		}
+		
+	};
+	
+	public static Handler getAllTickets = ctx -> {
+		
+		logger.info("TicketController: getAllTicketTickets()... creating ticket...");
+		
+		String body = ctx.body();
+		System.out.println(body);
+		String un = ctx.cookieStore().get("User-Cookie");
+		String authRole = uServ.getRole(un);
+		System.out.println(authRole);
+		
+		List<Ticket> tickets = tServ.getAllTickets();
+		
+		if(!tickets.isEmpty()) {
+			ctx.json(tickets);
+			ctx.status(HttpStatus.OK);
+		} else {
+			ctx.html("No tickets found.");
+			ctx.status(HttpStatus.NOT_FOUND);
 		}
 		
 	};
