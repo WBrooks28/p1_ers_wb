@@ -10,6 +10,8 @@ public interface TicketDAO {
 	
 	public List<Ticket> getAllTickets();
 	
+	public boolean updateTicket(Ticket ticket);
+	
 	//employee
 	public List<Ticket> getTicketsByUsername(String username);
 	

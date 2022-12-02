@@ -44,6 +44,7 @@ public class MainApp {
 		app.post("/ticket/submit", TicketController.createTicket);
 		
 		//PUT methods
+		app.put("/ticket/{id}", TicketController.updateTicketStatus);
 		
 		//DELETE methods
 		

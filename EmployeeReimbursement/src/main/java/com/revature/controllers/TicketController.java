@@ -52,6 +52,34 @@ public class TicketController {
 		
 	};
 	
+	public static Handler updateTicketStatus = ctx -> {
+		
+		String un = ctx.cookie("User-Cookie");
+		String authRole = uServ.getRole(un);
+		
+		if (authRole.equals("employee")) {
+			ctx.html("You must be a manager to update tickets");
+			ctx.status(HttpStatus.UNAUTHORIZED);
+		} else {
+			String body = ctx.body();
+		ObjectMapper om = new ObjectMapper();
+		Ticket target = om.readValue(body, Ticket.class);
+		
+		boolean isUpdated = tServ.updateTicketStatus(target);
+		
+		if(isUpdated != false) {
+			ctx.html("Error during update. Try again");
+			ctx.status(HttpStatus.NO_CONTENT);
+		}else {
+			ctx.html("The ticket has been updated");
+			ctx.status(HttpStatus.OK);
+		}
+		}
+		
+		
+		
+	};
+	
 	public static Handler getAllTickets = ctx -> {
 		
 		logger.info("TicketController: getAllTicketTickets()... creating ticket...");
@@ -62,7 +90,7 @@ public class TicketController {
 		System.out.println(authRole);
 		
 		if (authRole.equals("employee")) {
-			ctx.html("You must Be a manager to access all tickets");
+			ctx.html("You must be a manager to access all tickets");
 			ctx.status(HttpStatus.UNAUTHORIZED);
 		} else {
 			List<Ticket> tickets = tServ.getAllTickets();

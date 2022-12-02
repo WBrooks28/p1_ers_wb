@@ -95,4 +95,28 @@ public class TicketDAOImpl implements TicketDAO {
 		return null;
 	}
 
+
+	@Override
+	public boolean updateTicket(Ticket ticket) {
+			try {
+				logger.info("TicketDAOImpl - updateTicket() ... updating ticket ...");
+				
+				String sql = "UPDATE ers_tickets SET amount = ?, description = ?, status_id = ? WHERE ticket_id = ?";
+				
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setDouble(1, ticket.getAmount());
+				pstmt.setString(2, ticket.getDescription());
+				pstmt.setInt(3, ticket.getStatusId());
+				pstmt.setInt(4, ticket.getTicketId());
+				
+				pstmt.executeUpdate();
+				
+			}catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			
+		return false;
+	}
+
 }

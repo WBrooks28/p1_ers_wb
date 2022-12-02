@@ -8,7 +8,7 @@ public interface TicketService {
 
 	boolean createTicket(Ticket ticket);
 	
-	boolean updateTicketStatus(int ticketId, int statusId);
+	boolean updateTicketStatus(Ticket ticket);
 	
 	List<Ticket> getAllTickets();
 	List<Ticket> getTicketByUser(String username);
